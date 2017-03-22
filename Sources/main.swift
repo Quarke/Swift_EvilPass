@@ -23,15 +23,71 @@ import PerfectHTTPServer
 
 // An example request handler.
 // This 'handler' function can be referenced directly in the configuration below.
-func handler(data: [String:Any]) throws -> RequestHandler {
-	return {
-		request, response in
-		// Respond with a simple message.
-		response.setHeader(.contentType, value: "text/html")
-		response.appendBody(string: "<html><title>Hello, world!</title><body>Hello, world!</body></html>")
-		// Ensure that response.completed() is called when your processing is done.
-		response.completed()
-	}
+func handler(request: HTTPRequest, _ response: HTTPResponse) {
+
+    let name = request.param(name: "name", defaultValue: "")
+    let email = request.param(name: "email", defaultValue: "")
+    let password = request.param(name: "password", defaultValue: "")
+
+    guard !(name?.isEmpty)! else {
+        response.appendBody(string: "Username is required!")
+        response.completed()
+        return
+    }
+    guard !(email?.isEmpty)! else {
+        response.appendBody(string: "Email is required!")
+        response.completed()
+        return
+    }
+    guard !(password?.isEmpty)! else {
+        response.appendBody(string: "Password is required!")
+        response.completed()
+        return
+    }
+
+    // Build the object that will be returned
+    // Unwrap and add firstName to the returned object
+    // Unwrap and add lastName to the returned object
+    // Add emailAddress to the object if set
+    // Set response content type as application/json
+    // Set response status code as 200 OK
+    // Set the response body with the above object
+    // Complete the response
+    response.completed()
+}
+
+func _check_twitter(username, email, password) {
+	let request = NSURLRequest(URL: NSURL(string: "http://iswift.org")!)
+
+	// Perform the request
+	NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue(), completionHandler:{
+        (response: NSURLResponse?, data: NSData?, error: NSError?)-> Void in
+
+            // Get data as string
+            let str = NSString(data: data!, encoding: NSUTF8StringEncoding)
+            print(str)
+        }
+    );
+}
+
+func _check_github(username, email, password) {
+
+}
+
+func _check_fb(username, email, password) {
+
+}
+
+func _check_google(username, email, password) {
+
+}
+
+func _check_hn(username, email, pw){
+
+}
+
+func _check_reddit(username, email, pw){
+
 }
 
 // Configuration data for two example servers.
