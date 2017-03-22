@@ -20,6 +20,10 @@
 import PerfectLib
 import PerfectHTTP
 import PerfectHTTPServer
+import PerfectSession
+
+SessionConfig.CORS.enabled = true;
+SessionConfig.CORS.acceptableHostnames = ["*"];
 
 // An example request handler.
 // This 'handler' function can be referenced directly in the configuration below.
@@ -107,7 +111,8 @@ let confData = [
 			"name":"localhost",
 			"port":port1,
 			"routes":[
-				["method":"get", "uri":"/", "handler":handler],
+				["method":"post", "uri":"/", "handler": handler],
+				["method":"get", "uri":"/", "handler": handler],
 				["method":"get", "uri":"/**", "handler":PerfectHTTPServer.HTTPHandler.staticFiles,
 				 "documentRoot":"./webroot",
 				 "allowResponseFilters":true]
